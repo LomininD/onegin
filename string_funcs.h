@@ -7,6 +7,7 @@
 
 
 int my_puts(const char* string);
+int my_fputs(const char* string, FILE* stream);
 const char* strchr(const char* string, const char symbol);
 int my_strlen(const char* s);
 char* dynamic_strcat(char* string_1, char* string_2);

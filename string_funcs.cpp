@@ -17,8 +17,22 @@ int my_puts(const char* string)
         putchar(*string);
         string++;
     }
-
     putchar('\n');
+
+    return 0;
+}
+
+
+int my_fputs(const char* string, FILE* stream)
+{
+    assert(string != NULL);
+
+    while(*string != '\0' && *string != '\n')
+    {
+        fprintf(stream, "%c", *string);
+        string++;
+    }
+    fprintf(stream, "\n");
 
     return 0;
 }

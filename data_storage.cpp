@@ -5,7 +5,7 @@ line_info* split_poem(char* text_buf, size_t* text_ptr_size)
 {
     assert(text_buf != NULL);
 
-    size_t line_num = get_line_num(text_buf); // refactor
+    size_t line_num = get_line_num(text_buf); // refactor whole function
     *text_ptr_size = line_num + 1;
 
     printf("lines: %zu\n", line_num);

@@ -8,6 +8,16 @@
 #include "string_funcs.h"
 
 
+enum modes
+{
+    STANDARD,
+    DEBUG
+};
+
+
+modes launch_mode = STANDARD;
+
+
 struct file_info
 {
     FILE* fp;
@@ -45,7 +55,7 @@ int main()
     size_t text_ptr_size = line_num + 1;
 
     printf("lines: %d\n", line_num);
-    printf("text_ptr size: %zu\n\n", text_ptr_size);
+    printf("text_ptr size: %zu\n\n", text_ptr_size); // if
 
     //puts(text_buf);
 
@@ -68,16 +78,16 @@ char* get_text_buf(file_info* file)
 
     size_t file_size = file -> file_size = get_file_size(file);
 
-    char* text_buf = (char*) calloc(file_size + 1, sizeof(*text_buf)); // ask about sizeof
+    char* text_buf = (char*) calloc(file_size + 1, sizeof(*text_buf));
 
     assert(text_buf != NULL);
 
-    printf("bytes in file: %zu\n", file_size);
+    printf("bytes in file: %zu\n", file_size); // if
 
     file_size = fread(text_buf, sizeof(char), file_size, file_ptr);
     *(text_buf + file_size + 1) = '\0';
 
-    printf("bytes read: %zu\n", file_size);
+    printf("bytes read: %zu\n", file_size); // if
     printf("reading done\n\n");
 
     return text_buf;
@@ -131,7 +141,7 @@ line_info* get_text_ptr(size_t size, char* text_buf)
 
     size_t offset = 0;
 
-    for(int i = 1; i < size; i++)
+    for(int i = 1; i < size; i++) // ptr_arr consists of minimum 2 elements
     {
         size_t len = 0;
 
@@ -140,19 +150,17 @@ line_info* get_text_ptr(size_t size, char* text_buf)
             len++;
         }
 
-        len++;
-
-        (text_ptr + i)->line_ptr = text_buf + offset + len;
+        (text_ptr + i)->line_ptr = text_buf + offset + len + 1;
         (text_ptr + i - 1)->line_len = len;
 
-        offset += len;
+        offset += len + 1;
     }
 
     (text_ptr + size - 1)->line_len = 1;
 
     for(int i = 0; i < size; i++)
     {
-        printf("line %d, size %zu, ptr %p ", i + 1, (text_ptr + i)->line_len, (text_ptr + i)->line_ptr);
+        printf("line %d, size %zu, ptr %p ", i + 1, (text_ptr + i)->line_len, (text_ptr + i)->line_ptr); // if
         my_puts((text_ptr + i)->line_ptr);
     }
 

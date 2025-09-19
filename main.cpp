@@ -24,7 +24,6 @@ struct line_info
 size_t get_file_size(file_info* file);
 char* get_text_buf(file_info* file);
 int get_line_num(char* text_buf);
-size_t calculate_size(int line_num);
 line_info* initialise_text_ptr(size_t size);
 line_info* get_text_ptr(size_t size, char* text_buf);
 void terminate_file_data(line_info* text_ptr, char* text_buf);
@@ -43,7 +42,7 @@ int main()
     char* text_buf = get_text_buf(&file);
 
     int line_num = get_line_num(text_buf);
-    size_t text_ptr_size = calculate_size(line_num); // +1
+    size_t text_ptr_size = line_num + 1;
 
     printf("lines: %d\n", line_num);
     printf("text_ptr size: %zu\n\n", text_ptr_size);
@@ -117,16 +116,6 @@ int get_line_num(char* text_buf)
 }
 
 
-size_t calculate_size(int line_num)
-{
-    // total number of pointers = line_num + 1
-    //(including pointer at the beginning and the end of text_buf)
-    size_t size = line_num + 1;
-
-    return size;
-}
-
-
 line_info* get_text_ptr(size_t size, char* text_buf)
 {
     assert(text_buf != NULL);
@@ -140,20 +129,23 @@ line_info* get_text_ptr(size_t size, char* text_buf)
 
     text_ptr->line_ptr = text_buf;
 
+    size_t offset = 0;
+
     for(int i = 1; i < size; i++)
     {
         size_t len = 0;
 
-        while (*text_buf != '\n')
+        while (*(text_buf + offset + len) != '\n')
         {
-            text_buf++;
             len++;
         }
 
-        text_buf++;
+        len++;
 
-        (text_ptr + i)->line_ptr = text_buf;
+        (text_ptr + i)->line_ptr = text_buf + offset + len;
         (text_ptr + i - 1)->line_len = len;
+
+        offset += len;
     }
 
     (text_ptr + size - 1)->line_len = 1;

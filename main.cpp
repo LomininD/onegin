@@ -3,7 +3,6 @@
 //ask about pch
 
 //TODO: get file name
-//TODO: launch modes ?:
 //TODO: qsort
 //TODO: read about struct offsets
 //TODO: func pointers
@@ -13,6 +12,7 @@
 
 void terminate_file_data(line_info* text_ptr, char* text_buf);
 void print_lines(line_info* text_ptr, size_t size, FILE* stream);
+void fill_output_file(line_info* text_ptr, size_t text_ptr_size, FILE* output);
 
 
 int main()
@@ -26,23 +26,10 @@ int main()
 
     char* text_buf = get_text_buf(&file);
 
-    //puts(text_buf);
-
     size_t text_ptr_size = 0;
     line_info* text_ptr = split_poem(text_buf, &text_ptr_size);
-    fputs(text_buf, output);
-    //printf("line compare: %d\n\n", compare_lines(text_ptr + 1, text_ptr + 5));
 
-    //swap_lines(text_ptr, text_ptr + 1);
-    // my_puts(text_ptr->line_ptr);
-
-    bubble_sort(text_ptr, text_ptr_size, LTOR);
-
-    print_lines(text_ptr, text_ptr_size, output);
-
-    bubble_sort(text_ptr, text_ptr_size, RTOL);
-
-    print_lines(text_ptr, text_ptr_size, output);
+    fill_output_file(text_ptr, text_ptr_size, output);
 
     terminate_file_data(text_ptr, text_buf);
 
@@ -65,6 +52,29 @@ void terminate_file_data(line_info* text_ptr, char* text_buf)
 }
 
 
+void fill_output_file(line_info* text_ptr, size_t text_ptr_size, FILE* output)
+{
+    assert(text_ptr != NULL);
+    assert(output != NULL);
+
+    fprintf(output, "ORIGINAL VERSION:\n\n");
+
+    print_lines(text_ptr, text_ptr_size, output);
+
+    bubble_sort(text_ptr, text_ptr_size, LTOR);
+
+    fprintf(output, "LTOR SORTED VERSION:\n\n");
+
+    print_lines(text_ptr, text_ptr_size, output);
+
+    bubble_sort(text_ptr, text_ptr_size, RTOL);
+
+    fprintf(output, "RTOL SORTED VERSION:\n\n");
+
+    print_lines(text_ptr, text_ptr_size, output);
+}
+
+
 void print_lines(line_info* text_ptr, size_t size, FILE* stream)
 {
     assert(text_ptr != NULL);
@@ -74,10 +84,8 @@ void print_lines(line_info* text_ptr, size_t size, FILE* stream)
         char* line = (text_ptr + i)->line_ptr;
         size_t line_size = (text_ptr + i)->line_len;
         if (line_size > 1)
-            my_puts(line); //  TODO: ???
             my_fputs(line, stream);
     }
 
-    printf("\n");
     fprintf(stream, "\n");
 }

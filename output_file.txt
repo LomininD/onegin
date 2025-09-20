@@ -1,3 +1,5 @@
+ORIGINAL VERSION:
+
  My uncle - high ideals inspire him;
  but when past joking he fell sick,
  he really forced one to admire him --
@@ -12,7 +14,6 @@
  and glumly serves the medicine bottle,
  and sighs, and asks oneself all through:
  "When will the devil come for you?"
-
  Such were a young rake's meditations --
  by will of Zeus, the high and just,
  the legatee of his relations --
@@ -27,7 +28,6 @@
  reader, or where you've shone and glittered!
  There once I too strolled back and forth:
  but I'm allergic to the North...
-
  After a fine career, his father
  had only debts on which to live.
  He gave three balls a year, and rather
@@ -42,9 +42,9 @@
  No moralizing from this joker;
  a mild rebuke was his worst mark,
  and then a stroll in Letny Park.
- 
 
- 
+LTOR SORTED VERSION:
+
  After a fine career, his father
  a mild rebuke was his worst mark,
  and bred upon the Neva's brink,
@@ -88,6 +88,8 @@
  without preliminary feeler
  with this the hero of my tale:
 
+RTOL SORTED VERSION:
+
  Friends of my Ruslan and Lyudmila,
  of entertaining the half-dead:
  one smoothes the pillows down in bed,
@@ -130,7 +132,4 @@
  and never stir a foot away!
  reluctant to exhaust the boy,
  treated his lessons as a ploy.
- 
-
-
 

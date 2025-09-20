@@ -14,11 +14,11 @@
 #include "string_funcs.h"
 
 
-enum modes
-{
-    STANDARD,
-    DEBUG
-};
+// enum modes
+// {
+//     STANDARD,
+//     DEBUG
+// };
 
 
 #endif

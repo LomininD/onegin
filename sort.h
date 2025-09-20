@@ -21,8 +21,7 @@ enum sort_modes
 
 
 void bubble_sort(line_info* text_ptr, size_t ptr_arr_size, sort_modes sort);
-int compare_lines_LTOR(line_info* line_1, line_info* line_2);
-int compare_lines_RTOL(line_info* line_1, line_info* line_2);
+int compare_lines(line_info* line_1, line_info* line_2, sort_modes mode);
 int compare_symbols(char s1, char s2);
 void swap_lines(line_info* line_1, line_info* line_2);
 

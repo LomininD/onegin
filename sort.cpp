@@ -5,6 +5,8 @@ void bubble_sort(line_info* text_ptr, size_t ptr_arr_size, sort_modes mode)
 {
     assert(text_ptr != NULL);
 
+    //printf("started_sorting\n");
+
     int changed = 0;
     size_t to_change = ptr_arr_size;
 
@@ -15,13 +17,7 @@ void bubble_sort(line_info* text_ptr, size_t ptr_arr_size, sort_modes mode)
             line_info* line_1 = text_ptr + j;
             line_info* line_2 = text_ptr + j + 1;
 
-            int cmp = 0;
-            if (mode == LTOR)
-                cmp = compare_lines_LTOR(line_1, line_2);
-            else
-                cmp = compare_lines_RTOL(line_1, line_2);
-
-            if (!cmp)
+            if (!compare_lines(line_1, line_2, mode))
             {
                 swap_lines(line_1, line_2);
                 changed = 1;
@@ -37,7 +33,7 @@ void bubble_sort(line_info* text_ptr, size_t ptr_arr_size, sort_modes mode)
 
 
 // returns 1 if the order is correct
-int compare_lines_LTOR(line_info* line_1, line_info* line_2)
+int compare_lines(line_info* line_1, line_info* line_2, sort_modes mode)
 {
     assert(line_1 != NULL);
     assert(line_2 != NULL);
@@ -49,7 +45,24 @@ int compare_lines_LTOR(line_info* line_1, line_info* line_2)
     char* str_2 = line_2->line_ptr;
 
     int el_num_1 = 0, el_num_2 = 0;
-    while (el_num_1 < size_1 && el_num_2 < size_2)
+    int str_1_shorter = el_num_1 == size_1;
+    int next = 1;
+    int is_comparable = el_num_1 < size_1 && el_num_2 < size_2;
+
+    // printf("started comparing\n");
+    // my_puts(str_1);
+    // my_puts(str_2);
+    // printf("\n");
+
+    if (mode == RTOL)
+    {
+        el_num_1 = size_1 - 1, el_num_2 = size_2 - 1;
+        str_1_shorter = el_num_1 == 0;
+        next = -1;
+        is_comparable = el_num_1 > 0 && el_num_2 > 0;
+    }
+
+    while (is_comparable)
     {
         //printf("comparing s1 = %c s1 = %c result = %d\n", *(str_1 + el_num_1), *(str_2 + el_num_2), compare_symbols(*(str_1 + el_num_1), *(str_2 + el_num_2)));
 
@@ -64,70 +77,21 @@ int compare_lines_LTOR(line_info* line_1, line_info* line_2)
                 break;
 
             case WRONG_S1:
-                el_num_1++;
+                el_num_1 += next;
                 break;
 
             case WRONG_S2:
-                el_num_2++;
+                el_num_2 += next;
                 break;
 
             default:
-                el_num_1++;
-                el_num_2++;
+                el_num_1 += next;
+                el_num_2 += next;
                 break;
         }
     }
 
-    if (el_num_1 == size_1) // line 1 is shorter than line 2
-        return 1;
-    else
-        return 0;
-}
-
-
-// returns 1 if the order is correct
-int compare_lines_RTOL(line_info* line_1, line_info* line_2)
-{
-    assert(line_1 != NULL);
-    assert(line_2 != NULL);
-
-    size_t size_1 = line_1->line_len;
-    size_t size_2 = line_2->line_len;
-
-    char* str_1 = line_1->line_ptr;
-    char* str_2 = line_2->line_ptr;
-
-    int el_num_1 = size_1 - 1, el_num_2 = size_2 - 1;
-    while (el_num_1 >= 0 && el_num_2 >= 0)
-    {
-        //printf("comparing s1 = %c s1 = %c result = %d\n", *(str_1 + el_num_1), *(str_2 + el_num_2), compare_symbols(*(str_1 + el_num_1), *(str_2 + el_num_2)));
-
-        switch (compare_symbols(*(str_1 + el_num_1), *(str_2 + el_num_2)))
-        {
-            case 1:
-                return 1;
-                break;
-
-            case 0:
-                return 0;
-                break;
-
-            case WRONG_S1:
-                el_num_1--;
-                break;
-
-            case WRONG_S2:
-                el_num_2--;
-                break;
-
-            default:
-                el_num_1--;
-                el_num_2--;
-                break;
-        }
-    }
-
-    if (el_num_1 == 0) // line 1 is shorter than line 2
+    if (str_1_shorter) // line 1 is shorter than line 2
         return 1;
     else
         return 0;

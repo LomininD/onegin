@@ -10,15 +10,9 @@
 #include "data_storage.h"
 #include "font_styles.h"
 #include "input.h"
+#include "output.h"
 #include "sort.h"
 #include "string_funcs.h"
-
-
-// enum modes
-// {
-//     STANDARD,
-//     DEBUG
-// };
 
 
 #endif

@@ -1,17 +1,13 @@
 #include "main_headers.h"
 
 //ask about pch
-
 //TODO: get file name
 //TODO: qsort
 //TODO: read about struct offsets
 //TODO: func pointers
 
-//modes launch_mode = STANDARD;
-
 
 void terminate_file_data(line_info* text_ptr, char* text_buf);
-void print_lines(line_info* text_ptr, size_t size, FILE* stream);
 void fill_output_file(line_info* text_ptr, size_t text_ptr_size, FILE* output);
 
 
@@ -40,18 +36,6 @@ int main()
 }
 
 
-void terminate_file_data(line_info* text_ptr, char* text_buf)
-{
-    assert(text_ptr != NULL);
-    assert(text_buf != NULL);
-
-    free(text_ptr);
-    free(text_buf);
-
-    printf("termination succeeded\n");
-}
-
-
 void fill_output_file(line_info* text_ptr, size_t text_ptr_size, FILE* output)
 {
     assert(text_ptr != NULL);
@@ -75,17 +59,13 @@ void fill_output_file(line_info* text_ptr, size_t text_ptr_size, FILE* output)
 }
 
 
-void print_lines(line_info* text_ptr, size_t size, FILE* stream)
+void terminate_file_data(line_info* text_ptr, char* text_buf)
 {
     assert(text_ptr != NULL);
+    assert(text_buf != NULL);
 
-    for(size_t i = 0; i < size; i++)
-    {
-        char* line = (text_ptr + i)->line_ptr;
-        size_t line_size = (text_ptr + i)->line_len;
-        if (line_size > 1)
-            my_fputs(line, stream);
-    }
+    free(text_ptr);
+    free(text_buf);
 
-    fprintf(stream, "\n");
+    printf("termination succeeded\n");
 }

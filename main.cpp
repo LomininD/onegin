@@ -1,9 +1,7 @@
 #include "main_headers.h"
 
 //ask about pch
-//TODO: get file name
 //TODO: qsort
-//TODO: read about struct offsets
 //TODO: func pointers
 
 
@@ -11,12 +9,21 @@ void terminate_file_data(line_info* text_ptr, char* text_buf);
 void fill_output_file(line_info* text_ptr, size_t text_ptr_size, FILE* output);
 
 
-int main()
+int main(int argc, const char* argv[])
 {
     printf(MAKE_BOLD("ONEGIN LAUNCHED\n"));
 
-    FILE* input = fopen("sample_onegin.txt", "r");
+    FILE* input = NULL;
+
+    if(argc == 2)
+        input = fopen(argv[1], "r");
+    else
+        input = fopen("sample_onegin.txt", "r");
+
     FILE* output = fopen("output_file.txt", "w");
+
+    assert(input != NULL);
+    assert(output != NULL);
 
     file_info file = {input, 0};
 
